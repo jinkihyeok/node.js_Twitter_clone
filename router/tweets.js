@@ -8,5 +8,5 @@ const router = express.Router();
 //GET /tweets/:id
 //POST /tweets
 //PUT /tweets/:id
-
+//DELETE /tweets/:id
 export default router;
