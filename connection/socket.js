@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import jwt from "jsonwebtoken";
 import { config } from "../config.js";
 
 class Socket {
@@ -13,16 +14,12 @@ class Socket {
       if (!token) {
         return next(new Error("Authentication error"));
       }
-      JsonWebTokenError.verify(
-        token,
-        config.jwt.secretKey,
-        (error, decoded) => {
-          if (error) {
-            return next(new Error("Authentication error"));
-          }
-          next();
+      jwt.verify(token, config.jwt.secretKey, (error, decoded) => {
+        if (error) {
+          return next(new Error("Authentication error"));
         }
-      );
+        next();
+      });
     });
     this.io.on("connection", (socket) => {
       console.log("Socket client connected");

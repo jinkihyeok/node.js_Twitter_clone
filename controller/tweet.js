@@ -20,10 +20,10 @@ export async function getTweet(req, res) {
 }
 
 export async function createTweet(req, res) {
-  const { text, name, username } = req.body;
-  const tweet = await tweetRepository.create(text, name, username);
+  const { text } = req.body;
+  const tweet = await tweetRepository.create(text, req.userId);
   res.status(201).json(tweet);
-  getSocketIO.emit("tweets", tweet);
+  getSocketIO().emit("tweets", tweet);
 }
 
 export async function updateTweet(req, res) {
@@ -31,7 +31,7 @@ export async function updateTweet(req, res) {
   const text = req.body.text;
   const tweet = await tweetRepository.getById(id);
   if (!tweet) {
-    return res.sendStatus(404);
+    return res.sendStatus(404).json({ message: `Tweet not found: ${id}` });
   }
   if (tweet.userId !== req.userId) {
     return res.sendStatus(403);
@@ -44,7 +44,7 @@ export async function deleteTweet(req, res) {
   const id = req.params.id;
   const tweet = await tweetRepository.getById(id);
   if (!tweet) {
-    return res.sendStatus(404);
+    return res.sendStatus(404).json({ message: `Tweet not found: ${id}` });
   }
   if (tweet.userId !== req.userId) {
     return res.sendStatus(403);
