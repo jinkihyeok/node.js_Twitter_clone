@@ -30,6 +30,7 @@ app.use((error, req, res, next) => {
 
 connectDB()
   .then(() => {
+    console.log(`Server is started.... ${new Date()}`);
     const server = app.listen(config.host.port);
     initSocket(server);
   })
