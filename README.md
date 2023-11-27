@@ -8,3 +8,5 @@
 - socket 사용하여 서버와 클라이언트 실시간 트윗 받아오기
 - mySQL 사용하여 데이터 관리
 - 관계형 데이터베이스 Sequelize ORM 적용
+
+![server](https://github.com/jinkihyeok/node.js_Twitter_clone/assets/103499016/9bd24f59-0193-43a3-8145-b963f4810edd)
